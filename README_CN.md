@@ -1,51 +1,50 @@
 # DFRobot_DS1307
-* [中文版](./README_CN.md)
+* [English Version](./README.md)
 
-The DS1307 serial real-time clock (RTC) is a low-power, full binary-coded decimal (BCD) clock/calendar 
-plus 56 bytes of NV SRAM. Address and data are transferred serially through an I2C, bidirectional bus. 
-The clock/calendar provides seconds, minutes, hours, day, date, month, and year information. The end of 
-the month date is automatically adjusted for months with fewer than 31 days, including corrections for leap 
-year. The clock operates in either the 24-hour or 12-hour format with AM/PM indicator. The DS1307 has a 
-built-in power-sense circuit that detects power failures and automatically switches to the backup supply. 
-Timekeeping operation continues while the part operates from the backup supply.
+DS1307串行实时时钟(RTC)是一个低功耗、全二进制编码的十进制(BCD)时钟/日历，再加上56字节的NVSRAM。
+地址和数据通过I2C双向总线串行传输。
+时钟/日历提供秒、分钟、小时、日期、日期、月和年份的信息。
+月底日期会自动按不足31天的月份进行调整，包括对闰年的调整。
+该时钟以24小时或12小时的格式运行，并带有AM/PM指示器。
+DS1307有一个内置的电源感应电路，可以检测电源故障并自动切换到备用电源。
+当部件从备份供应运行时，继续计时操作。
 
 ![产品实物图](./resources/images/DS1307.png)
 
 
-## Product Link (https://www.dfrobot.com/product-879.html)
+## 产品链接 (https://www.dfrobot.com.cn/goods-535.html)
     SKU: DFR0151
 
 
-## Table of Contents
+## 目录
 
-* [Summary](#summary)
-* [Installation](#installation)
-* [Methods](#methods)
-* [Compatibility](#compatibility)
-* [History](#history)
-* [Credits](#credits)
-
-
-## Summary
-
-* Real-Time Clock (RTC) Counts Seconds, Minutes, Hours, Date of the Month, Month, Day of the week, and Year with Leap-Year Compensation Valid Up to 2100
-* 56-Byte, Battery-Backed, General-Purpose RAMwith Unlimited Writes
-* I2C Serial Interface
-* Programmable Square-Wave Output Signal
-* Automatic Power-Fail Detect and Switch Circuitry
-* Consumes Less than 500nA in Battery-Backup Mode with Oscillator Running
-* Optional Industrial Temperature Range:-40°C to +85°C 
-* Available in 8-Pin Plastic DIP or SO
-* Underwriters Laboratories (UL) Recognized
+* [概述](#概述)
+* [库安装](#库安装)
+* [方法](#方法)
+* [兼容性](#兼容性)
+* [历史](#历史)
+* [创作者](#创作者)
 
 
-## Installation
+## 概述
 
-To use this library, first download the library file, paste it into the \Arduino\libraries directory, 
-then open the examples folder and run the demo in the folder.
+* 实时时钟(RTC)计数秒数，分钟，小时，月的日期，月，星期，年与闰年的补偿有效至2100年
+* 56字节，电池支持，通用RAM，无限写入
+* I2C串行接口
+* 可编程方波输出信号
+* 自动断电检测和开关电路
+* 电池备份时消耗小于500nA振荡器运行模式
+* 可选工业温度范围:-40°C + 85°C
+* 8针塑料DIP或以上
+* 美国保险商实验室(UL)认证
 
 
-## Methods
+## 库安装
+
+要使用这个库, 首先下载库文件, 将其粘贴到\Arduino\libraries目录中, 然后打开示例文件夹并在文件夹中运行演示。
+
+
+## 方法
 
 ```C++
 
@@ -192,7 +191,7 @@ then open the examples folder and run the demo in the folder.
 ```
 
 
-## Compatibility
+## 兼容性
 
 MCU                | Work Well    | Work Wrong   | Untested    | Remarks
 ------------------ | :----------: | :----------: | :---------: | :----:
@@ -205,12 +204,12 @@ FireBeetle-M0      |      √       |              |             |
 Micro:bit          |      √       |              |             |
 
 
-## History
+## 历史
 
-- 2021/12/02 - Version 1.0.0 released.
+- 2021/12/02 - 1.0.0 版本
 
 
-## Credits
+## 创作者
 
 Written by qsjhyy(yihuan.huang@dfrobot.com), 2021. (Welcome to our [website](https://www.dfrobot.com/))
 
