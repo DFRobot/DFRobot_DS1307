@@ -51,72 +51,72 @@ then open the examples folder and run the demo in the folder.
 
   /**
    * @fn begin
-   * @brief 初始化函数
-   * @return true 表示初始化成功; false 表示初始化失败
+   * @brief Init function
+   * @return true indicate init succeed; false indicate init failed
    */
   bool begin(void);
 
   /**
    * @fn getTime
-   * @brief 从rtc模块获取时间并转换为uint16_t
-   * @param rtc 用于缓存获取的时间的数组, uint16_t *
+   * @brief Get the time from rtc module and convert it to uint16_t
+   * @param rtc Array for buffering the obtained time *
    * @return None
    */
   void getTime(uint16_t *rtc);
 
   /**
    * @fn getTypeTime
-   * @brief 从rtc模块获取单个类型的时间并转换为uint16_t
-   * @param type 要获取的时间类型, eTimeType_t:
+   * @brief Get the time of one type from rtc module and convert it to uint16_t
+   * @param type Time type to be obtained, eTimeType_t:
    * @n eSEC, eMIN, eHR, eDOW, eDATE, eMTH, eYR
-   * @return 根据选择的时间类型, 返回对应范围的数值uint16_t
-   * @n 读取 eSEC 类型时, 范围为: 00-59
-   * @n 读取 eMIN 类型时, 范围为: 00-59
-   * @n 读取 eHR 类型时, 范围为: 00-23
-   * @n 读取 eDOW 类型时, 范围为: 01-07
-   * @n 读取 eDATE 类型时, 范围为: 01-31
-   * @n 读取 eMTH 类型时, 范围为: 01-12
-   * @n 读取 eYR 类型时, 范围为: 2000-2099
+   * @return According to the selected time type, return the value uint16_t of the corresponding range
+   * @n When reading eSEC type, range: 00-59
+   * @n When reading eMIN type, range: 00-59
+   * @n When reading eHR type, range: 00-23
+   * @n When reading eDOW type, range: 01-07
+   * @n When reading eDATE type, range: 01-31
+   * @n When reading eMTH type, range: 01-12
+   * @n When reading eYR type, range: 2000-2099
    */
   uint16_t getTypeTime(eTimeType_t type);
 
   /**
    * @fn setTime
-   * @brief 根据给的数组, 设置所有时间
-   * @param rtc 按如下格式编辑的数组(类型为uint16_t)
-   * @n rtc[0]为 eSEC 类型, 范围为: 00-59
-   * @n rtc[1]为 eMIN 类型, 范围为: 00-59
-   * @n rtc[2]为 eHR 类型, 范围为: 00-23
-   * @n rtc[3]为 eDOW 类型, 范围为: 01-07
-   * @n rtc[4]为 eDATE 类型, 范围为: 01-31
-   * @n rtc[5]为 eMTH 类型, 范围为: 01-12
-   * @n rtc[6]为 eYR 类型, 范围为: 2000-2099
-   * @n 注意: 超出范围的将导致设置错误
+   * @brief According to the available array, set all the time
+   * @param rtc Array in the following format (type is uint16_t)
+   * @n rtc[0] for eSEC type, range: 00-59
+   * @n rtc[1] for eMIN type, range: 00-59
+   * @n rtc[2] for eHR type, range: 00-23
+   * @n rtc[3] for eDOW type, range: 01-07
+   * @n rtc[4] for eDATE type, range: 01-31
+   * @n rtc[5] for eMTH type, range: 01-12
+   * @n rtc[6] for eYR type, range: 2000-2099
+   * @n Note: Values out of range will result in a setting error
    * @return None
    */
   void setTime(uint16_t *rtc);
 
   /**
    * @fn setTypeTime
-   * @brief 根据选择设置的时间类型, 传入对应范围的数值, 设置时间
-   * @param type 要获取的时间类型, eTimeType_t:
+   * @brief According to the set time type, input the value in corresponding range, set time
+   * @param type Time type to be obtained, eTimeType_t:
    * @n eSEC, eMIN, eHR, eDOW, eDATE, eMTH, eYR
-   * @param typeTime 根据选择的时间类型, 写入对应范围的数值
-   * @n 设置 eSEC 类型时, 范围为: 00-59
-   * @n 设置 eMIN 类型时, 范围为: 00-59
-   * @n 设置 eHR 类型时, 范围为: 00-23
-   * @n 设置 eDOW 类型时, 范围为: 01-07
-   * @n 设置 eDATE 类型时, 范围为: 01-31
-   * @n 设置 eMTH 类型时, 范围为: 01-12
-   * @n 设置 eYR 类型时, 范围为: 2000-2099
-   * @n 注意: 超出范围的将导致设置错误
+   * @param typeTime According to the selected time type, write the value of the corresponding range
+   * @n When setting eSEC type, range: 00-59
+   * @n When setting eMIN type, range: 00-59
+   * @n When setting eHR type, range: 00-23
+   * @n When setting eDOW type, range: 01-07
+   * @n When setting eDATE type, range: 01-31
+   * @n When setting eMTH type, range: 01-12
+   * @n When setting eYR type, range: 2000-2099
+   * @n Note: Values out of range will result in a setting error
    * @return None
    */
   void setTypeTime(eTimeType_t type, uint16_t typeTime);
 
   /**
    * @fn start
-   * @brief 启动RTC计时功能
+   * @brief Start RTC timing function
    * @n this bit is part of the seconds byte
    * @return None
    */
@@ -124,7 +124,7 @@ then open the examples folder and run the demo in the folder.
 
   /**
    * @fn stop
-   * @brief 停止RTC计时功能
+   * @brief Stop RTC timing function
    * @n this bit is part of the seconds byte
    * @return None
    */
@@ -132,8 +132,8 @@ then open the examples folder and run the demo in the folder.
 
   /**
    * @fn setSqwPinMode
-   * @brief control the operation of the SQW/OUT pin
-   * @param mode SQW Pin 输出模式:
+   * @brief Control the operation of the SQW/OUT pin
+   * @param mode SQW Pin Output mode:
    * @n eSquareWave_LOW, eSquareWave_HIGH, eSquareWave_1Hz, 
    * @n eSquareWave_4kHz, eSquareWave_8kHz, eSquareWave_32kHz
    * @return None
@@ -142,7 +142,7 @@ then open the examples folder and run the demo in the folder.
 
   /**
    * @fn getSqwPinMode
-   * @brief 获取 SQW/OUT pin 当前输出模式
+   * @brief Get the current output mode of SQW/OUT pin
    * @return eSqwPinMode_t:
    * @n eSquareWave_LOW, eSquareWave_HIGH, eSquareWave_1Hz, 
    * @n eSquareWave_4kHz, eSquareWave_8kHz, eSquareWave_32kHz
@@ -151,40 +151,40 @@ then open the examples folder and run the demo in the folder.
 
   /**
    * @fn saveTimeToEEPROM
-   * @brief 将当前时间存入EEPROM, 可用于掉电重启后, 将时间设置为最后一次保存的时间
-   * @n 掉电时调用此接口, 重启时调用setTimeFromEEPROM()即可实现
+   * @brief Store the current time into EEPROM, which can be used to set the time to the last saved one after power off
+   * @n Call the interface when powering off and call setTimeFromEEPROM() to realize when restarting
    * @return None
    */
   void saveTimeToEEPROM(void);
 
   /**
    * @fn setTimeFromEEPROM
-   * @brief 将时间设置为最后一次保存的时间
-   * @n 如果之前没调用过saveTimeToEEPROM(), 或者调用完后自行
-   * @n 修改了EEPROM里面的内容, 则可能导致时间设置错误
-   * @note 如果未使传感器掉电时复位主控板, 可能会使该接口误调用, 从而误更改时间
+   * @brief Set the time to when last saved
+   * @n If saveTimeToEEPROM() wasn’t called before or the contents in EEPROM have been modified after the call,
+   * @n the time setting error may occur.
+   * @note If the MCU board is reset when sensor is not powered off, the interface may be miscalled and the time may be changed by mistake.
    * @return None
    */
   void setTimeFromEEPROM(void);
 
   /**
    * @fn readEEPROM
-   * @brief 通过I2C总线读EEPROM
-   * @param addr  EEPROM数据地址 8bits
-   * @param pBuf 要读取数据的存放缓存
-   * @param size 要读取数据的长度
-   * @return 返回读取的长度, 返回0表示读取失败
+   * @brief Read EEPROM through I2C bus
+   * @param addr  EEPROM data address 8bits
+   * @param pBuf Storage and buffer for data to be read
+   * @param size Length of the data to be read
+   * @return Return the read length, returning 0 indicates reading failed
    */
   size_t readEEPROM(uint8_t addr, uint8_t* pBuf, size_t size);
 
   /**
    * @fn writeEEPROM
-   * @brief 通过I2C总线写EEPROM
-   * @param addr  EEPROM数据地址 8bits
-   * @param pBuf 要写入数据的存放缓存
-   * @param size 要写入数据的长度
-   * @note 用户可自由存储的数据大小为247个字节, 范围0-247
-   * @n 最后8个字节是存储用户调用saveTimeToEEPROM()保存的时间数据
+   * @brief Write EEPROM through I2C bus
+   * @param addr  EEPROM data address 8bits
+   * @param pBuf Storage and buffer for data to be written
+   * @param size Length of data to be written
+   * @note The data size that users can freely store is 247 bytes, range 0-247
+   * @n The last 8 bytes are for storing the time data saved when the user call saveTimeToEEPROM()
    * @return None
    */
   void writeEEPROM(uint8_t addr, const uint8_t* pBuf, size_t size);

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*
 '''!
   @file  set_time_and_SQW.py
-  @brief  设置时间并开始计时，设置sqw引脚输出
-  @details  读取时间和sqw引脚模式
+  @brief  Set time and start timing, set pin sqw output
+  @details  Read the time and pin sqw mode
   @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   @license  The MIT License (MIT)
   @author  [qsjhyy](yihuan.huang@dfrobot.com)
@@ -19,8 +19,8 @@ from DFRobot_DS1307 import *
 
 '''
   # Module I2C communication init
-  # ds1307_addr I2C通信地址
-  # bus I2C总线
+  # ds1307_addr I2C communication address
+  # bus I2C bus
 '''
 DS1307 = DFRobot_DS1307()
 
@@ -32,65 +32,65 @@ def setup():
   print("DS1307 begin successfully!!!")
 
   '''
-    # 根据选择设置的时间类型, 传入对应范围的数值, 设置时间
-    # type 要获取的时间类型:
+    # According to the set time type, input the value of the corresponding range, set time
+    # type Time type to be obtained:
     #   e_SEC, e_MIN, e_HR, e_DOW, e_DATE, e_MTH, e_YR
-    # type_time 根据选择的时间类型, 写入对应范围的数值
-    #   读取 e_SEC 类型时, 范围为: 00-59
-    #   读取 e_MIN 类型时, 范围为: 00-59
-    #   读取 e_HR 类型时, 范围为: 00-23
-    #   读取 e_DOW 类型时, 范围为: 01-07
-    #   读取 e_DATE 类型时, 范围为: 01-31
-    #   读取 e_MTH 类型时, 范围为: 01-12
-    #   读取 e_YR 类型时, 范围为: 2000-2099
+    # type_time According to the selected time type, write the value of the corresponding range
+    #   When reading e_SEC type, range: 00-59
+    #   When reading e_MIN type, range: 00-59
+    #   When reading e_HR type, range: 00-23
+    #   When reading e_DOW type, range: 01-07
+    #   When reading e_DATE type, range: 01-31
+    #   When reading e_MTH type, range: 01-12
+    #   When reading e_YR type, range: 2000-2099
   '''
   DS1307.set_type_time(DS1307.e_YR, 2000)
 
   '''
-    # 从rtc模块获取单个类型的时间
-    # type 要获取的时间类型:
+    # Get the time of one type from rtc module
+    # type Time type to be obtained:
     #   e_SEC, e_MIN, e_HR, e_DOW, e_DATE, e_MTH, e_YR
-    # 根据选择的时间类型, 返回对应范围的数值
-    #   读取 e_SEC 类型时, 范围为: 00-59
-    #   读取 e_MIN 类型时, 范围为: 00-59
-    #   读取 e_HR 类型时, 范围为: 00-23
-    #   读取 e_DOW 类型时, 范围为: 01-07
-    #   读取 e_DATE 类型时, 范围为: 01-31
-    #   读取 e_MTH 类型时, 范围为: 01-12
-    #   读取 e_YR 类型时, 范围为: 2000-2099
+    # According to the selected time type, return the value of the corresponding range
+    #   When reading e_SEC type, range: 00-59
+    #   When reading e_MIN type, range: 00-59
+    #   When reading e_HR type, range: 00-23
+    #   When reading e_DOW type, range: 01-07
+    #   When reading e_DATE type, range: 01-31
+    #   When reading e_MTH type, range: 01-12
+    #   When reading e_YR type, range: 2000-2099
   '''
   print("get type time:  %u" %( DS1307.get_type_time(DS1307.e_YR) ) )
 
   '''
-    # 停止RTC计时功能
+    # Stop RTC timing function
     # this bit is part of the seconds byte
   '''
   DS1307.stop
 
   '''
-    # 根据给的数组, 设置所有时间
-    # time_list 按如下格式编辑的数组
-    #   time_list[0]为 e_SEC 类型, 范围为: 00-59
-    #   time_list[1]为 e_MIN 类型, 范围为: 00-59
-    #   time_list[2]为 e_HR 类型, 范围为: 00-23
-    #   time_list[3]为 e_DOW 类型, 范围为: 01-07
-    #   time_list[4]为 e_DATE 类型, 范围为: 01-31
-    #   time_list[5]为 e_MTH 类型, 范围为: 01-12
-    #   time_list[6]为 e_YR 类型, 范围为: 2000-2099
-    #   注意: 超出范围的将导致设置错误
+    # According to the available array, set all the time
+    # time_list Array in the following format
+    #   time_list[0] for e_SEC type, range: 00-59
+    #   time_list[1] for e_MIN type, range: 00-59
+    #   time_list[2] for e_HR type, range: 00-23
+    #   time_list[3] for e_DOW type, range: 01-07
+    #   time_list[4] for e_DATE type, range: 01-31
+    #   time_list[5] for e_MTH type, range: 01-12
+    #   time_list[6] for e_YR type, range: 2000-2099
+    #   Note: Values out of range will result in a setting error
   '''
   time_list = [5, 1, 7, 6, 9, 9, 2021]
   DS1307.set_time(time_list)
 
   '''
-    # 启动RTC计时功能
+    # Start RTC timing function
     # this bit is part of the seconds byte
   '''
   DS1307.start
 
   '''
-    # control the operation of the SQW/OUT pin
-    # mode SQW Pin 输出模式:
+    # Control the operation of the SQW/OUT pin
+    # mode SQW Pin output mode:
     #   e_square_wave_LOW, e_square_wave_HIGH, e_square_wave_1Hz, 
     #   e_square_wave_4kHz, e_square_wave_8kHz, e_square_wave_32kHz
   '''
@@ -99,8 +99,8 @@ def setup():
 
 def loop():
   '''
-    # 获取 SQW/OUT pin 当前输出模式
-    # 输出模式:
+    # Get the current output mode of SQW/OUT pin
+    # Output mode:
     #   e_square_wave_LOW, e_square_wave_HIGH, e_square_wave_1Hz, 
     #   e_square_wave_4kHz, e_square_wave_8kHz, e_square_wave_32kHz
   '''
@@ -108,15 +108,15 @@ def loop():
     print("SQW/OUT pin: 1Hz | ", end='')
 
   '''
-    # 从rtc模块获取时间
-    # 获取的时间的列表
-    #   time_list[0]为 e_SEC 类型, 范围为: 00-59
-    #   time_list[1]为 e_MIN 类型, 范围为: 00-59
-    #   time_list[2]为 e_HR 类型, 范围为: 00-23
-    #   time_list[3]为 e_DOW 类型, 范围为: 01-07
-    #   time_list[4]为 e_DATE 类型, 范围为: 01-31
-    #   time_list[5]为 e_MTH 类型, 范围为: 01-12
-    #   time_list[6]为 e_YR 类型, 范围为: 2000-2099
+    # Get the time from rtc module
+    # The obtained time list
+    #   time_list[0] for e_SEC type, range: 00-59
+    #   time_list[1] for e_MIN type, range: 00-59
+    #   time_list[2] for e_HR type, range: 00-23
+    #   time_list[3] for e_DOW type, range: 01-07
+    #   time_list[4] for e_DATE type, range: 01-31
+    #   time_list[5] for e_MTH type, range: 01-12
+    #   time_list[6] for e_YR type, range: 2000-2099
   '''
   time_list = DS1307.get_time()
   print("time: %u/%u/%u-%u %u:%u:%u \n" %( time_list[6], time_list[5],

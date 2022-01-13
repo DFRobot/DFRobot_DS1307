@@ -31,8 +31,7 @@ bool DFRobot_DS1307::begin(void)
   _pWire->begin();   // Wire.h(I2C)library function initialize wire library
   delay(100);
 
-  if(0 == readReg(DS1307_SEC_REG, &rtcBCD[eSEC], sizeof(rtcBCD[eSEC])))   // Judge whether the data bus is successful
-  {
+  if(0 == readReg(DS1307_SEC_REG, &rtcBCD[eSEC], sizeof(rtcBCD[eSEC]))){   // Judge whether the data bus is successful
     DBG("ERR_DATA_BUS");
     return false;
   }
@@ -45,8 +44,7 @@ bool DFRobot_DS1307::begin(void)
 void DFRobot_DS1307::getTime(uint16_t *rtc)
 {
   readReg(DS1307_SEC_REG, rtcBCD, sizeof(rtcBCD));
-  for(uint8_t i=0; i<7; i++)  // cycle through each component, create array of data
-  {
+  for(uint8_t i=0; i<7; i++){  // cycle through each component, create array of data
     rtc[i] = (uint16_t)(bcd2bin(rtcBCD[i] & rtcMask[i]));
   }
   rtc[eYR] += DS1307_BASE_YR;
@@ -70,8 +68,7 @@ uint16_t DFRobot_DS1307::getTypeTime(eTimeType_t type)
 void DFRobot_DS1307::setTime(uint16_t *rtc)
 {
   rtc[eYR] -= DS1307_BASE_YR;
-  for(uint8_t i=0; i<7; i++)  // cycle through each component, create array of data
-  {
+  for(uint8_t i=0; i<7; i++){  // cycle through each component, create array of data
     rtcBCD[i] = (rtcBCD[i] & (~rtcMask[i])) | (bin2bcd((uint8_t)rtc[i] & rtcMask[i]));
   }
   writeReg(DS1307_SEC_REG, rtcBCD, sizeof(rtcBCD));
@@ -116,14 +113,14 @@ DFRobot_DS1307::eSqwPinMode_t DFRobot_DS1307::getSqwPinMode(void)
 void DFRobot_DS1307::saveTimeToEEPROM(void)
 {
   readReg(DS1307_SEC_REG, rtcBCD, sizeof(rtcBCD));
-  writeEEPROM(248, rtcBCD, sizeof(rtcBCD));   // 用EEPROM最后8个字节来存储时间
+  writeEEPROM(248, rtcBCD, sizeof(rtcBCD));   // Use the last 8 bites of EEPROM to store time
   // delay(1);
 }
 
 void DFRobot_DS1307::setTimeFromEEPROM(void)
 {
   readEEPROM(248, rtcBCD, sizeof(rtcBCD));
-  writeReg(DS1307_SEC_REG, rtcBCD, sizeof(rtcBCD));   // EEPROM最后8个字节是我们之前存储的时间
+  writeReg(DS1307_SEC_REG, rtcBCD, sizeof(rtcBCD));   // The last 8 bytes of the EEPROM are the time stored before
   // delay(1);
 }
 
@@ -178,8 +175,7 @@ void DFRobot_DS1307::writeReg(uint8_t reg, const void* pBuf, size_t size, uint8_
 size_t DFRobot_DS1307::readReg(uint8_t reg, void* pBuf, size_t size, uint8_t deviceAddr)
 {
   size_t count = 0;
-  if(NULL == pBuf)
-  {
+  if(NULL == pBuf){
     DBG("pBuf ERROR!! : null pointer");
   }
   uint8_t * _pBuf = (uint8_t*)pBuf;
@@ -189,14 +185,12 @@ size_t DFRobot_DS1307::readReg(uint8_t reg, void* pBuf, size_t size, uint8_t dev
   _pWire->beginTransmission(deviceAddr);
   // _pWire -> write(0);
   _pWire -> write(reg);
-  if(0 != _pWire->endTransmission())   // Used Wire.endTransmission() to end a slave transmission started by beginTransmission() and arranged by write().
-  {
+  if(0 != _pWire->endTransmission()){   // Used Wire.endTransmission() to end a slave transmission started by beginTransmission() and arranged by write().
     DBG("endTransmission ERROR!!");
   }else{
     _pWire->requestFrom(deviceAddr, (uint8_t)size);   // Master device requests size bytes from slave device, which can be accepted by master device with read() or available()
     
-    while (_pWire->available())
-    {
+    while (_pWire->available()){
       _pBuf[count++] = _pWire->read();   // Use read() to receive and put into buf
     }
   }

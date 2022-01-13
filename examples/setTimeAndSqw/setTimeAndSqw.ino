@@ -1,7 +1,7 @@
 /*!
  * @file  setTimeAndSqw.ino
- * @brief  设置时间并开始计时，设置sqw引脚输出
- * @details  读取时间和sqw引脚模式
+ * @brief  Set time and start timing, set pin sqw output
+ * @details  Read the time and pin sqw mode
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license  The MIT License (MIT)
  * @author  [qsjhyy](yihuan.huang@dfrobot.com)
@@ -12,14 +12,14 @@
 #include <DFRobot_DS1307.h>
 
 
-/* 构造函数 */
+/* Constructor */
 DFRobot_DS1307 DS1307;
 
 void setup()
 {
   Serial.begin(115200);
 
-  // 初始化传感器
+  // Initialize sensor
   while( !(DS1307.begin()) ){
     Serial.println("Communication with device failed, please check connection");
     delay(3000);
@@ -27,65 +27,65 @@ void setup()
   Serial.println("Begin ok!");
 
   /**
-   *  根据选择设置的时间类型, 传入对应范围的数值, 设置时间
-   *  type 要获取的时间类型, eTimeType_t:
+   *  According to the set time type, input the value of the corresponding range, set time
+   *  type Time type to be obtained, eTimeType_t:
    *    eSEC, eMIN, eHR, eDOW, eDATE, eMTH, eYR
-   *  typeTime 根据选择的时间类型, 写入对应范围的数值
-   *    设置 eSEC 类型时, 范围为: 00-59
-   *    设置 eMIN 类型时, 范围为: 00-59
-   *    设置 eHR 类型时, 范围为: 00-23
-   *    设置 eDOW 类型时, 范围为: 01-07
-   *    设置 eDATE 类型时, 范围为: 01-31
-   *    设置 eMTH 类型时, 范围为: 01-12
-   *    设置 eYR 类型时, 范围为: 2000-2099
-   *  注意: 超出范围的将导致设置错误
+   *  typeTime According to the selected time type, write the value of the corresponding range
+   *    When setting eSEC type, range: 00-59
+   *    When setting eMIN type, range: 00-59
+   *    When setting eHR type, range: 00-23
+   *    When setting eDOW type, range: 01-07
+   *    When setting eDATE type, range: 01-31
+   *    When setting eMTH type, range: 01-12
+   *    When setting eYR type, range: 2000-2099
+   *  Note: Values out of range will result in a setting error
    */
   DS1307.setTypeTime(DS1307.eYR, 2000);
 
   /**
-   *  从rtc模块获取单个类型的时间并转换为uint16_t
-   *  type 要获取的时间类型, eTimeType_t:
+   *  Get the time of one type from rtc module and convert it to uint16_t
+   *  type Time type to be obtained, eTimeType_t:
    *    eSEC, eMIN, eHR, eDOW, eDATE, eMTH, eYR
-   *  根据选择的时间类型, 返回对应范围的数值uint16_t
-   *    读取 eSEC 类型时, 范围为: 00-59
-   *    读取 eMIN 类型时, 范围为: 00-59
-   *    读取 eHR 类型时, 范围为: 00-23
-   *    读取 eDOW 类型时, 范围为: 01-07
-   *    读取 eDATE 类型时, 范围为: 01-31
-   *    读取 eMTH 类型时, 范围为: 01-12
-   *    读取 eYR 类型时, 范围为: 2000-2099
+   *  According to the selected time type, return the value uint16_t of the corresponding range
+   *    When reading eSEC type, range: 00-59
+   *    When reading eMIN type, range: 00-59
+   *    When reading eHR type, range: 00-23
+   *    When reading eDOW type, range: 01-07
+   *    When reading eDATE type, range: 01-31
+   *    When reading eMTH type, range: 01-12
+   *    When reading eYR type, range: 2000-2099
    */
   Serial.print("get type time: ");
   Serial.println(DS1307.getTypeTime(DS1307.eYR));
 
   /**
-   *  停止RTC计时功能
+   *  Stop RTC timer function
    *  this bit is part of the seconds byte
    */
   DS1307.stop();
   /**
-   *  根据给的数组, 设置所有时间
-   *  setTimeBuff 按如下格式编辑的数组(类型为uint16_t)
-   *    setTimeBuff[0]为 eSEC 类型, 范围为: 00-59
-   *    setTimeBuff[1]为 eMIN 类型, 范围为: 00-59
-   *    setTimeBuff[2]为 eHR 类型, 范围为: 00-23
-   *    setTimeBuff[3]为 eDOW 类型, 范围为: 01-07
-   *    setTimeBuff[4]为 eDATE 类型, 范围为: 01-31
-   *    setTimeBuff[5]为 eMTH 类型, 范围为: 01-12
-   *    setTimeBuff[6]为 eYR 类型, 范围为: 2000-2099
-   *  注意: 超出范围的将导致设置错误
+   *  According to the available array, set all the time
+   *  setTimeBuff Array in the following format (type is uint16_t)
+   *    setTimeBuff[0] for eSEC type, range: 00-59
+   *    setTimeBuff[1] for eMIN type, range: 00-59
+   *    setTimeBuff[2] for eHR type, range: 00-23
+   *    setTimeBuff[3] for eDOW type, range: 01-07
+   *    setTimeBuff[4] for eDATE type, range: 01-31
+   *    setTimeBuff[5] for eMTH type, range: 01-12
+   *    setTimeBuff[6] for eYR type, range: 2000-2099
+   *  Note: Values out of range will result in a setting error
    */
   uint16_t setTimeBuff[7] = {5, 1, 7, 6, 9, 9, 2021};
   DS1307.setTime(setTimeBuff);
   /**
-   *  启动RTC计时功能
+   *  Start RTC timing function
    *  this bit is part of the seconds byte
    */
   DS1307.start();
 
   /**
    *  control the operation of the SQW/OUT pin
-   *  mode SQW Pin 输出模式:
+   *  mode SQW Pin output mode:
    *    eSquareWave_LOW, eSquareWave_HIGH, eSquareWave_1Hz, 
    *    eSquareWave_4kHz, eSquareWave_8kHz, eSquareWave_32kHz
    */
@@ -96,7 +96,7 @@ void setup()
 void loop()
 {
   /**
-   *  获取 SQW/OUT pin 当前输出模式
+   *  Get the current output mode of SQW/OUT pin
    *  eSqwPinMode_t:
    *    eSquareWave_LOW, eSquareWave_HIGH, eSquareWave_1Hz, 
    *    eSquareWave_4kHz, eSquareWave_8kHz, eSquareWave_32kHz
@@ -106,15 +106,15 @@ void loop()
   }
 
   /**
-   *  从rtc模块获取时间并转换为uint16_t
-   *  getTimeBuff 用于缓存获取的时间的数组, uint16_t *
-   *    getTimeBuff[0]为 eSEC 类型, 范围为: 00-59
-   *    getTimeBuff[1]为 eMIN 类型, 范围为: 00-59
-   *    getTimeBuff[2]为 eHR 类型, 范围为: 00-23
-   *    getTimeBuff[3]为 eDOW 类型, 范围为: 01-07
-   *    getTimeBuff[4]为 eDATE 类型, 范围为: 01-31
-   *    getTimeBuff[5]为 eMTH 类型, 范围为: 01-12
-   *    getTimeBuff[6]为 eYR 类型, 范围为: 2000-2099
+   *  Get the time from rtc module and convert it to uint16_t
+   *  getTimeBuff Array for buffering the obtained time, uint16_t *
+   *    getTimeBuff[0] for eSEC type, range: 00-59
+   *    getTimeBuff[1] for eMIN type, range: 00-59
+   *    getTimeBuff[2] for eHR type, range: 00-23
+   *    getTimeBuff[3] for eDOW type, range: 01-07
+   *    getTimeBuff[4] for eDATE type, range: 01-31
+   *    getTimeBuff[5] for eMTH type, range: 01-12
+   *    getTimeBuff[6] for eYR type, range: 2000-2099
    */
   uint16_t getTimeBuff[7] = {0};
   DS1307.getTime(getTimeBuff);

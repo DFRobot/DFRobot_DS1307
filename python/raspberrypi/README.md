@@ -49,125 +49,125 @@ To use the library, first download the library file, paste it into the directory
 ```python
 
   '''!
-    @brief 初始化函数
-    @return  返回初始化状态
-    @retval True 表示初始化成功
-    @retval False 表示初始化成失败
+    @brief Init function
+    @return  Return init status
+    @retval True indicate init succeed
+    @retval False indicate init failed
   '''
   def begin(self):
 
   '''!
-    @brief 从rtc模块获取时间
-    @return 获取的时间的列表
-    @n rtc[0]为 e_SEC 类型, 范围为: 00-59
-    @n rtc[1]为 e_MIN 类型, 范围为: 00-59
-    @n rtc[2]为 e_HR 类型, 范围为: 00-23
-    @n rtc[3]为 e_DOW 类型, 范围为: 01-07
-    @n rtc[4]为 e_DATE 类型, 范围为: 01-31
-    @n rtc[5]为 e_MTH 类型, 范围为: 01-12
-    @n rtc[6]为 e_YR 类型, 范围为: 2000-2099
+    @brief Get the time from rtc module
+    @return The obtained time list
+    @n rtc[0] for e_SEC type, range: 00-59
+    @n rtc[1] for e_MIN type, range: 00-59
+    @n rtc[2] for e_HR type, range: 00-23
+    @n rtc[3] for e_DOW type, range: 01-07
+    @n rtc[4] for e_DATE type, range: 01-31
+    @n rtc[5] for e_MTH type, range: 01-12
+    @n rtc[6] for e_YR type, range: 2000-2099
   '''
   def get_time(self):
 
   '''!
-    @brief 从rtc模块获取单个类型的时间
-    @param type 要获取的时间类型:
+    @brief Get the time of one type from rtc module
+    @param type Time type to be obtained:
     @n e_SEC, e_MIN, e_HR, e_DOW, e_DATE, e_MTH, e_YR
-    @return 根据选择的时间类型, 返回对应范围的数值
-    @n 读取 e_SEC 类型时, 范围为: 00-59
-    @n 读取 e_MIN 类型时, 范围为: 00-59
-    @n 读取 e_HR 类型时, 范围为: 00-23
-    @n 读取 e_DOW 类型时, 范围为: 01-07
-    @n 读取 e_DATE 类型时, 范围为: 01-31
-    @n 读取 e_MTH 类型时, 范围为: 01-12
-    @n 读取 e_YR 类型时, 范围为: 2000-2099
+    @return According to the selected time type, return the value of the corresponding range
+    @n When reading e_SEC type, range: 00-59
+    @n When reading e_MIN type, range: 00-59
+    @n When reading e_HR type, range: 00-23
+    @n When reading e_DOW type, range: 01-07
+    @n When reading e_DATE type, range: 01-31
+    @n When reading e_MTH type, range: 01-12
+    @n When reading e_YR type, range: 2000-2099
   '''
   def get_type_time(self, type):
 
   '''!
-    @brief 根据给的数组, 设置所有时间
-    @param rtc 按如下格式编辑的数组
-    @n rtc[0]为 e_SEC 类型, 范围为: 00-59
-    @n rtc[1]为 e_MIN 类型, 范围为: 00-59
-    @n rtc[2]为 e_HR 类型, 范围为: 00-23
-    @n rtc[3]为 e_DOW 类型, 范围为: 01-07
-    @n rtc[4]为 e_DATE 类型, 范围为: 01-31
-    @n rtc[5]为 e_MTH 类型, 范围为: 01-12
-    @n rtc[6]为 e_YR 类型, 范围为: 2000-2099
-    @n 注意: 超出范围的将导致设置错误
+    @brief According to the available array, set all the time
+    @param rtc Array in the following format
+    @n rtc[0] for e_SEC type, range: 00-59
+    @n rtc[1] for e_MIN type, range: 00-59
+    @n rtc[2] for e_HR type, range: 00-23
+    @n rtc[3] for e_DOW type, range: 01-07
+    @n rtc[4] for e_DATE type, range: 01-31
+    @n rtc[5] for e_MTH type, range: 01-12
+    @n rtc[6] for e_YR type, range: 2000-2099
+    @n Note: Values out of range will result in a setting error
   '''
   def set_time(self, rtc):
 
   '''!
-    @brief 根据选择设置的时间类型, 传入对应范围的数值, 设置时间
-    @param type 要获取的时间类型:
+    @brief According to the set time type, input the value of corresponding range, set time
+    @param type Time type to be obtained:
     @n e_SEC, e_MIN, e_HR, e_DOW, e_DATE, e_MTH, e_YR
-    @param type_time 根据选择的时间类型, 写入对应范围的数值
-    @n 读取 e_SEC 类型时, 范围为: 00-59
-    @n 读取 e_MIN 类型时, 范围为: 00-59
-    @n 读取 e_HR 类型时, 范围为: 00-23
-    @n 读取 e_DOW 类型时, 范围为: 01-07
-    @n 读取 e_DATE 类型时, 范围为: 01-31
-    @n 读取 e_MTH 类型时, 范围为: 01-12
-    @n 读取 e_YR 类型时, 范围为: 2000-2099
+    @param type_time According to the selected time type, write the value of the corresponding range
+    @n When reading e_SEC type, range: 00-59
+    @n When reading e_MIN type, range: 00-59
+    @n When reading e_HR type, range: 00-23
+    @n When reading e_DOW type, range: 01-07
+    @n When reading e_DATE type, range: 01-31
+    @n When reading e_MTH type, range: 01-12
+    @n When reading e_YR type, range: 2000-2099
   '''
   def set_type_time(self, type, type_time):
 
   '''!
-    @brief 启动RTC计时功能
+    @brief Start RTC timing function
     @n this bit is part of the seconds byte
   '''
   @property
   def start(self):
 
   '''!
-    @brief 停止RTC计时功能
+    @brief Stop RTC timing function
     @n this bit is part of the seconds byte
   '''
   @property
   def stop(self):
 
   '''!
-    @brief control the operation of the SQW/OUT pin
-    @param mode SQW Pin 输出模式:
+    @brief Control the operation of the SQW/OUT pin
+    @param mode SQW Pin output mode:
     @n e_square_wave_LOW, e_square_wave_HIGH, e_square_wave_1Hz, 
     @n e_square_wave_4kHz, e_square_wave_8kHz, e_square_wave_32kHz
   '''
   def set_SQW_pin_mode(self, mode):
 
   '''!
-    @brief 获取 SQW/OUT pin 当前输出模式
-    @return 输出模式:
+    @brief Get the current output mode of SQW/OUT pin
+    @return output mode:
     @n e_square_wave_LOW, e_square_wave_HIGH, e_square_wave_1Hz, 
     @n e_square_wave_4kHz, e_square_wave_8kHz, e_square_wave_32kHz
   '''
   def get_SQW_pin_mode(self):
 
   '''!
-    @brief 将当前时间存入EEPROM, 可用于掉电重启后, 将时间设置为最后一次保存的时间
-    @n 掉电时调用此接口, 重启时调用setTimeFromEEPROM()即可实现
+    @brief Store the current time into EEPROM, which can be used to set the time to the last saved one after power off
+    @n Call the interface when powering off and call setTimeFromEEPROM() to realize when restarting
   '''
   @property
   def save_time_to_EEPROM(self):
 
   '''!
-    @brief 将时间设置为最后一次保存的时间
-    @n 如果之前没调用过saveTimeToEEPROM(), 或者调用完后自行
-    @n 修改了EEPROM里面的内容, 则可能导致时间设置错误
-    @note 如果未使传感器掉电时复位主控板, 可能会使该接口误调用, 从而误更改时间
+    @brief Set the time to the last saved one
+    @n If saveTimeToEEPROM() wasn’t called before or the contents in EEPROM have been modified after the call,
+    @n the time setting error may occur.
+    @note If the MCU board is reset when sensor is not powered off, the interface may be miscalled and the time may be changed by mistake.
   '''
   @property
   def set_time_from_EEPROM(self):
 
   '''!
-    @brief writes data to a EEPROM
+    @brief Writes data to a EEPROM
     @param reg EEPROM address
     @param data written data
   '''
   def write_EEPROM(self, reg, data):
 
   '''!
-    @brief read the data from the EEPROM
+    @brief Read the data from the EEPROM
     @param reg EEPROM address
     @param length read data length
     @return read data list

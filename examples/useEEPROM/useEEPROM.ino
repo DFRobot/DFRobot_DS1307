@@ -1,8 +1,8 @@
 /*!
  * @file  useEEPROM.ino
- * @brief  本demo演示了, 如何使用传感器上的EEPORM
- * @details  可以通过其保存上次时间, 重新上电后用保存的时间设置DS1307
- * @n 也可向EEPROM写入(读取)一些字符串, 或者uint8_t的数组, 掉电保存
+ * @brief  This demo demonstrates how to use EEPORM of the sensor
+ * @details  Save the last time and set DS1307 with the saved time after repowering on.
+ * @n Or write (read) some character strings or uint8_t array to (from) EEPROM and power off to save them
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license  The MIT License (MIT)
  * @author  [qsjhyy](yihuan.huang@dfrobot.com)
@@ -13,14 +13,14 @@
 #include <DFRobot_DS1307.h>
 
 
-/* 构造函数 */
+/* Constructor */
 DFRobot_DS1307 DS1307;
 
 void setup()
 {
   Serial.begin(115200);
 
-  // 初始化传感器
+  // Initialize sensor
   while( !(DS1307.begin()) ){
     Serial.println("Communication with device failed, please check connection");
     delay(3000);
@@ -28,43 +28,43 @@ void setup()
   Serial.println("Begin ok!");
 
   /**
-   *  停止RTC计时功能
+   *  Stop RTC timing function
    *  this bit is part of the seconds byte
    */
   DS1307.stop();
 
   /**
-   *  根据给的数组, 设置所有时间
-   *  setTimeBuff 按如下格式编辑的数组(类型为uint16_t)
-   *    setTimeBuff[0]为 eSEC 类型, 范围为: 00-59
-   *    setTimeBuff[1]为 eMIN 类型, 范围为: 00-59
-   *    setTimeBuff[2]为 eHR 类型, 范围为: 00-23
-   *    setTimeBuff[3]为 eDOW 类型, 范围为: 01-07
-   *    setTimeBuff[4]为 eDATE 类型, 范围为: 01-31
-   *    setTimeBuff[5]为 eMTH 类型, 范围为: 01-12
-   *    setTimeBuff[6]为 eYR 类型, 范围为: 2000-2099
-   *  注意: 超出范围的将导致设置错误
+   *  According to the available array, set all the time
+   *  setTimeBuff Array in the following format (type is uint16_t)
+   *    setTimeBuff[0] for eSEC type, range: 00-59
+   *    setTimeBuff[1] for eMIN type, range: 00-59
+   *    setTimeBuff[2] for eHR type, range: 00-23
+   *    setTimeBuff[3] for eDOW type, range: 01-07
+   *    setTimeBuff[4] for eDATE type, range: 01-31
+   *    setTimeBuff[5] for eMTH type, range: 01-12
+   *    setTimeBuff[6] for eYR type, range: 2000-2099
+   *  Note: Values out of range will result in a setting error
    */
   // uint16_t setTimeBuff[7] = {5, 1, 7, 6, 9, 9, 2021};
   // DS1307.setTime(setTimeBuff);
 
   /**
-   *  将当前时间存入EEPROM, 可用于掉电重启后, 将时间设置为最后一次保存的时间
-   *  掉电时调用此接口, 重启时调用setTimeFromEEPROM()即可实现
+   *  Store the current time into EEPROM, which can be used to set the time to the last saved one when powering off and restarting
+   *  Call this interface when power off and call setTimeFromEEPROM() to realize when restarting
    */
   // DS1307.saveTimeToEEPROM();
 
   /**
-   *  将时间设置为最后一次保存的时间
-   *    如果之前没调用过saveTimeToEEPROM(), 或者调用完后自行
-   *    修改了EEPROM里面的内容, 则可能导致时间设置错误
-   *  如果未使传感器掉电时复位主控板, 可能会使该接口误调用, 从而误更改时间
-   * 注意: 初次使用请手动设置时间, 调用setTime()
+   *  Set the time to the last saved one
+   *    If saveTimeToEEPROM() wasn’t called before or the contents in EEPROM have been modified after the call,
+   *    then time setting error may occur.
+   *  If the MCU board is reset when sensor is not powered off, the interface may be miscalled and then the time may be changed by mistake.
+   * Note: please set the time manually for the first time, call setTime()
    */
   DS1307.setTimeFromEEPROM();
 
   /**
-   *  启动RTC计时功能
+   *  Start RTC timing function
    *  this bit is part of the seconds byte
    */
   DS1307.start();
@@ -72,12 +72,12 @@ void setup()
   Serial.println("--- EEPROM Read-Write Test---");
   uint8_t someData[] = "This is data from the eeprom!";   // data to write
   /**
-   *  通过I2C总线写EEPROM
-   *  addr  EEPROM数据地址 8bits
-   *  pBuf 要写入数据的存放缓存
-   *  size 要写入数据的长度
-   *  用户可自由存储的数据大小为247个字节, 范围0-247
-   *  最后8个字节是存储用户调用saveTimeToEEPROM()保存的时间数据
+   *  Write EEPROM through I2C bus
+   *  addr  EEPROM data address 8bits
+   *  pBuf Storage and buffer for data to be written
+   *  size Length of data to be written
+   *  The data size that users can freely store is 247 bytes, range 0-247
+   *  The last 8 bytes are for storing the time data saved when the user call saveTimeToEEPROM()
    */
   DS1307.writeEEPROM(0, someData, sizeof(someData));
   Serial.println("Written Done!");
@@ -88,11 +88,11 @@ void setup()
   {
     data = 0;
     /**
-     * 通过I2C总线读EEPROM
-     * addr  EEPROM数据地址 8bits
-     * pBuf 要读取数据的存放缓存
-     * size 要读取数据的长度
-     * 返回读取的长度, 返回0表示读取失败
+     * Read EEPROM through I2C bus
+     * addr  EEPROM data address 8bits
+     * pBuf Storage and buffer for data to be read
+     * size Length of the data to be read
+     * Return the read length, returning 0 indicates reading failed
      */
     DS1307.readEEPROM(addr, &data, sizeof(data));
     Serial.print((char)data);
@@ -103,15 +103,15 @@ void setup()
 void loop()
 {
   /**
-   *  从rtc模块获取时间并转换为uint16_t
-   *  getTimeBuff 用于缓存获取的时间的数组, uint16_t *
-   *    getTimeBuff[0]为 eSEC 类型, 范围为: 00-59
-   *    getTimeBuff[1]为 eMIN 类型, 范围为: 00-59
-   *    getTimeBuff[2]为 eHR 类型, 范围为: 00-23
-   *    getTimeBuff[3]为 eDOW 类型, 范围为: 01-07
-   *    getTimeBuff[4]为 eDATE 类型, 范围为: 01-31
-   *    getTimeBuff[5]为 eMTH 类型, 范围为: 01-12
-   *    getTimeBuff[6]为 eYR 类型, 范围为: 2000-2099
+   *  Get the time from rtc module and convert it to uint16_t
+   *  getTimeBuff Array for buffering the obtained time, uint16_t *
+   *    getTimeBuff[0] for eSEC type, range: 00-59
+   *    getTimeBuff[1] for eMIN type, range: 00-59
+   *    getTimeBuff[2] for eHR type, range: 00-23
+   *    getTimeBuff[3] for eDOW type, range: 01-07
+   *    getTimeBuff[4] for eDATE type, range: 01-31
+   *    getTimeBuff[5] for eMTH type, range: 01-12
+   *    getTimeBuff[6] for eYR type, range: 2000-2099
    */
   uint16_t getTimeBuff[7] = {0};
   DS1307.getTime(getTimeBuff);
@@ -128,8 +128,8 @@ void loop()
   Serial.print(outputarr);
 
   /**
-   *  将当前时间存入EEPROM, 可用于掉电重启后, 将时间设置为最后一次保存的时间
-   *  掉电时调用此接口, 重启时调用setTimeFromEEPROM()即可实现
+   *  Store the current time into EEPROM, which is used to set the time to the last saved one after powering off and restarting
+   *  Call the interface when powering off and call setTimeFromEEPROM() to realize when restarting
    */
   DS1307.saveTimeToEEPROM();
 

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*
 '''!
   @file  use_EEPROM.py
-  @brief  本demo演示了, 如何使用传感器上的EEPORM
-  @details  可以通过其保存上次时间, 重新上电后用保存的时间设置DS1307
-  @n 也可向EEPROM写入(读取)一些字符串, 或者uint8_t的数组, 掉电保存
+  @brief  This demo demonstrates how to use EEPORM of the sensor
+  @details  Save the last time and set DS1307 with the saved time after repowering on.
+  @n Or write (read) some character strings or uint8_t array to (from) EEPROM and power off to save them.
   @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
   @license  The MIT License (MIT)
   @author  [qsjhyy](yihuan.huang@dfrobot.com)
@@ -20,8 +20,8 @@ from DFRobot_DS1307 import *
 
 '''
   # Module I2C communication init
-  # ds1307_addr I2C通信地址
-  # bus I2C总线
+  # ds1307_addr I2C communication address
+  # bus I2C bus
 '''
 DS1307 = DFRobot_DS1307()
 
@@ -33,57 +33,57 @@ def setup():
   print("DS1307 begin successfully!!!")
 
   '''
-    # 停止RTC计时功能
+    # Stop RTC timing function
     # this bit is part of the seconds byte
   '''
   DS1307.stop
 
   '''
-    # 根据给的数组, 设置所有时间
-    # time_list 按如下格式编辑的数组
-    #   time_list[0]为 e_SEC 类型, 范围为: 00-59
-    #   time_list[1]为 e_MIN 类型, 范围为: 00-59
-    #   time_list[2]为 e_HR 类型, 范围为: 00-23
-    #   time_list[3]为 e_DOW 类型, 范围为: 01-07
-    #   time_list[4]为 e_DATE 类型, 范围为: 01-31
-    #   time_list[5]为 e_MTH 类型, 范围为: 01-12
-    #   time_list[6]为 e_YR 类型, 范围为: 2000-2099
-    #   注意: 超出范围的将导致设置错误
+    # According to the available array, set all the time
+    # time_list Array in the following format
+    #   time_list[0] for e_SEC type, range: 00-59
+    #   time_list[1] for e_MIN type, range: 00-59
+    #   time_list[2] for e_HR type, range: 00-23
+    #   time_list[3] for e_DOW type, range: 01-07
+    #   time_list[4] for e_DATE type, range: 01-31
+    #   time_list[5] for e_MTH type, range: 01-12
+    #   time_list[6] for e_YR type, range: 2000-2099
+    #   Note: out of range will result in a setting error
   '''
   # time_list = [5, 1, 7, 6, 9, 9, 2021]
   # DS1307.set_time(time_list)
 
   '''
-    # 将当前时间存入EEPROM, 可用于掉电重启后, 将时间设置为最后一次保存的时间
-    # 掉电时调用此接口, 重启时调用setTimeFromEEPROM()即可实现
+    # Store the current time into EEPROM, which can be used to set the time to the last saved one after powering off and restarting
+    # Call the interface when powering off and call setTimeFromEEPROM() to realize when restarting
   '''
   # DS1307.save_time_to_EEPROM
 
   '''
-    # 将时间设置为最后一次保存的时间
-    # 如果之前没调用过saveTimeToEEPROM(), 或者调用完后自行
-    # 修改了EEPROM里面的内容, 则可能导致时间设置错误
-    # 如果未使传感器掉电时复位主控板, 可能会使该接口误调用, 从而误更改时间
+    # Set the time to the last saved one
+    # If saveTimeToEEPROM() wasn’t called before or the contents in EEPROM have been modified after the call,
+    # the time setting error may occur.
+    # If the MCU board is reset when sensor is not powered off, the interface may be miscalled and then the time may be changed by mistake.
   '''
   DS1307.set_time_from_EEPROM
 
   '''
-    # 启动RTC计时功能
+    # Start RTC timing function
     # this bit is part of the seconds byte
   '''
   DS1307.start
 
   print("--- EEPROM Read-Write Test---")
   str_data = "This is data from the eeprom!"   # data to write
-  list_data = list(str_data)   # 字符串转列表
+  list_data = list(str_data)   # Character string converting list
   '''
     # writes data to a EEPROM
     # reg EEPROM address
     # data written data
-    # 用户可自由存储的数据大小为247个字节, 范围0-247
-    # 最后8个字节是存储用户调用saveTimeToEEPROM()保存的时间数据
+    # The data size that users can freely store is 247 bytes, range 0-247
+    # The last 8 bytes are for storing the time data saved when the user call saveTimeToEEPROM()
   '''
-  # 将字符串列表的字符元素挨个转换为其对应的整数, 并写入EEPROM
+  # Convert the character elements in the character string list to their corresponding integers one by one, and write them to EEPROM.
   DS1307.write_EEPROM( 0, list(map( ord, list_data )) )
   print("Written Done!")
 
@@ -94,28 +94,28 @@ def setup():
     # length read data length
     # read data list
   '''
-  # 将从EEPROM读出来的整数列表的整数元素依次转换为其对应的字符, 再将得到的字符列表转换为字符串打印
+  # Convert the integer elements in the integer list read from EEPROM to their corresponding characters, and then convert the obtained character list to the string for printing.
   print(''.join( list(map( chr, DS1307.read_EEPROM(0, len(list_data)) )) ))
 
 def loop():
   '''
-    # 从rtc模块获取时间
-    # 获取的时间的列表
-    #   rtc[0]为 e_SEC 类型, 范围为: 00-59
-    #   rtc[1]为 e_MIN 类型, 范围为: 00-59
-    #   rtc[2]为 e_HR 类型, 范围为: 00-23
-    #   rtc[3]为 e_DOW 类型, 范围为: 01-07
-    #   rtc[4]为 e_DATE 类型, 范围为: 01-31
-    #   rtc[5]为 e_MTH 类型, 范围为: 01-12
-    #   rtc[6]为 e_YR 类型, 范围为: 2000-2099
+    # Get the time from rtc module
+    # The obtained time list
+    #   rtc[0] for e_SEC type, range: 00-59
+    #   rtc[1] for e_MIN type, range: 00-59
+    #   rtc[2] for e_HR type, range: 00-23
+    #   rtc[3] for e_DOW type, range: 01-07
+    #   rtc[4] for e_DATE type, range: 01-31
+    #   rtc[5] for e_MTH type, range: 01-12
+    #   rtc[6] for e_YR type, range: 2000-2099
   '''
   time_list = DS1307.get_time()
   print("time: %u/%u/%u-%u %u:%u:%u \n" %(time_list[6], time_list[5], 
   time_list[4], time_list[3], time_list[2], time_list[1], time_list[0]))
 
   '''
-    # 将当前时间存入EEPROM, 可用于掉电重启后, 将时间设置为最后一次保存的时间
-    # 掉电时调用此接口, 重启时调用setTimeFromEEPROM()即可实现
+    # Store the current time into EEPROM, which is used to set the time to the last saved one after power off
+    # Call the interface when powering off and call setTimeFromEEPROM() to realize when restarting
   '''
   DS1307.save_time_to_EEPROM
 
